@@ -1,0 +1,27 @@
+---
+description: 
+globs: **/Dockerfile, **/Dockerfile.*, **/docker-compose*.yml, .devcontainer/**
+alwaysApply: false
+---
+---
+description: Detect & use project containers     # human-readable summary ✅
+globs: ['**/Dockerfile', '**/docker-compose*.yml']  # or set alwaysApply: true ✅
+alwaysApply: false      # Auto-attach when any glob matches
+---
+
+# Container Development Workflow
+
+- **Detect** the presence of a Dockerfile, `docker-compose*.yml`, or `.devcontainer/`.
+- **Assume** the default dev workflow runs **inside** the container(s).
+- When suggesting shell commands, **wrap them** in  
+  `docker compose exec <service> bash -c "<CMD>"`  
+  unless the user explicitly requests host-level execution.
+- Prefer `docker compose` over raw `docker` if a Compose file exists.
+- For tasks that mutate dependencies or binaries (e.g. `npm install`, DB migrations), run them **inside the relevant service**.
+- Use `docker compose build` (or `--build`) whenever code changes affect the image.
+- Provide container lifecycle helpers:  
+  `docker compose up -d`, `restart`, `down`, `logs -f <service>`.
+- Never install or mutate host packages when the project is containerised, unless explicitly instructed otherwise.
+- If multiple services exist and the correct one is ambiguous, **ask which service** to target before executing commands.
+
+@docs/dev-container-setup.md   <!-- Optional: attach extra context if you have it -->

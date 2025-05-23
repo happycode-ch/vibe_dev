@@ -1,0 +1,63 @@
+---
+description: 
+globs: CHANGELOG.md
+alwaysApply: false
+---
+---
+description: Maintain Changelog Standard v1 across the project (Keep-a-Changelog 1.0.0 + SemVer 2.0.0).
+globs:
+  - "**/CHANGELOG.md"
+alwaysApply: false   # Auto-attached when a CHANGELOG is present
+---
+
+## Changelog Maintenance Rule
+
+When editing or generating a `CHANGELOG.md`, follow **Changelog Standard v1**
+(see `docs/CHANGELOG_STANDARD_v1.md`).
+
+### Core requirements
+- Required section order: **Unreleased → Added → Changed → Deprecated → Removed → Fixed → Security**.
+- Present-tense, imperative voice. Hard-wrap ≤ 72 columns (cosmetic).
+- **Each bullet ends with one tag**: `#major`, `#minor`, or `#patch`.
+- Breaking bullets start with `⚠️ BREAKING:` and carry `#major`.
+- No nested bullets—single “- ” or “* ” prefix.
+- Release process:
+  1. Promote **Unreleased** to `## [vX.Y.Z] – YYYY-MM-DD`.
+  2. Highest tag sets bump (`#major` > `#minor` > `#patch`).
+  3. Recreate fresh **Unreleased** stub.
+  4. Commit `chore(release): vX.Y.Z` and push tag `vX.Y.Z`.
+
+### Migration
+- If file lacks compliance stamp run `scripts/changelog_bump.sh migrate`.
+- Add `<!-- CHANGELOG_STANDARD_VERSION: 1 -->` at top after migration.
+- Wrap frozen legacy content in:
+  ```md
+  <details><summary>Legacy history (pre-standard)</summary>
+
+  …legacy changelog…
+
+  </details>
+Lint & CI
+Fail commit/PR when:
+
+bullet missing tag
+
+“Unreleased” absent
+
+nested bullets detected
+
+Use ./scripts/changelog_tag_lint.sh in pre-commit or CI.
+
+Example bullet
+arduino
+Copy
+Edit
+- Add OAuth 2.1 support #minor
+References
+docs/CHANGELOG_STANDARD_v1.md
+
+perl
+Copy
+Edit
+
+*Grab the link or the code—whichever works best for you.* ​:contentReference[oaicite:0]{index=0}​
